@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frisca</title>
+<meta name="description" content="Frisca — Trust & Safety and operations professional based across Singapore, Jakarta and Bali. Risk intelligence, enforcement governance, AI operations, and community building.">
+<meta property="og:title" content="Frisca">
+<meta property="og:description" content="Trust & Safety, risk operations and AI governance — APAC focus.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --text: #1d1d1b;
+    --muted: #6b6a65;
+    --rule: #e4e1d9;
+    --accent: #2f5d50;
+    --tag-bg: #eef1ec;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151514;
+      --text: #e9e7e1;
+      --muted: #9a978f;
+      --rule: #2c2b28;
+      --accent: #8fc1ae;
+      --tag-bg: #222823;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  main { max-width: 680px; margin: 0 auto; padding: 64px 20px 96px; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  header h1 { font-size: 2.1rem; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { font-family: Inter, system-ui, sans-serif; font-size: 0.85rem; color: var(--muted); margin: 0 0 24px; }
+  nav { font-family: Inter, system-ui, sans-serif; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 40px; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--accent); }
+  section { margin-top: 48px; }
+  h2 {
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+  h3 { font-size: 1.05rem; font-weight: 600; margin: 0; }
+  p { margin: 0 0 14px; }
+  .item { margin-bottom: 28px; }
+  .meta { font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); margin: 2px 0 8px; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag { font-family: Inter, system-ui, sans-serif; font-size: 0.72rem; background: var(--tag-bg); color: var(--muted); padding: 2px 8px; border-radius: 3px; }
+  .posts li { list-style: none; display: flex; gap: 16px; margin-bottom: 8px; }
+  .posts { padding-left: 0; }
+  .posts .date { font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); min-width: 88px; padding-top: 3px; }
+  footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); }
+  @media (max-width: 480px) {
+    body { font-size: 17px; }
+    main { padding: 40px 16px 72px; }
+    .posts li { flex-direction: column; gap: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Frisca</h1>
+  <p class="sub">Trust &amp; Safety · Risk Operations · AI Governance — Singapore / Jakarta / Bali</p>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#writing">Writing</a>
+    <a href="#beyond">Beyond work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="about">
+  <h2>About</h2>
+  <p>I work on Trust &amp; Safety and operations — finding patterns in abuse, governing enforcement systems, and briefing decision-makers on what the data shows. Most of my work has focused on child safety and enforcement quality in Indonesia and the wider APAC region.</p>
+  <p>I care about how AI-mediated enforcement affects real users, especially in markets where local language and context are under-represented. I'm interested in investigative risk operations, intelligence work, and AI governance.</p>
+  <p>Outside work, I build communities for Indonesian early-career professionals and AI learners, teach yoga, and run.</p>
+</section>
+
+<section id="work">
+  <h2>Work</h2>
+
+  <div class="item">
+    <h3>Trust &amp; Safety Operations / Market Risk Specialist — Meta</h3>
+    <p class="meta">APAC · Singapore</p>
+    <ul>
+      <li>Led detection tooling implementation for child safety: 4k monthly CSAM enforcement, 10% NCMEC escalation.</li>
+      <li>Collaborated on AI detection signals for child sexual solicitation in Instagram messaging; true positive rate 60% → 75%.</li>
+      <li>Managed child safety network disruption (~2k accounts).</li>
+      <li>Governed 50+ automated enforcement pipelines with &gt;98% accuracy compliance; monitored over/underenforcement in the Indonesian market.</li>
+      <li>Led RCA on a 230% human review volume surge; identified irrelevant classifiers and reduced volume by 80%.</li>
+      <li>Drove 15% vendor quality improvement through training and AI-assisted curriculum.</li>
+      <li>Updated 3+ law enforcement response guidelines for regulatory alignment; processed LERT documents for Indonesian markets.</li>
+      <li>Achieved 80% enforcement rate on priority threat landscape monitoring; top P0/P1 closer on business continuity plan.</li>
+    </ul>
+    <div class="tags"><span class="tag">child safety</span><span class="tag">investigations</span><span class="tag">enforcement governance</span><span class="tag">LLM evaluation</span><span class="tag">vendor quality</span></div>
+  </div>
+
+  <div class="item">
+    <h3>Associate Project Manager — Shopee Express</h3>
+    <p class="meta">Indonesia</p>
+    <ul>
+      <li>Collaborated with vendor management on vendor decisions; managed 6+ outsourced truck contracts (SLA, pricing).</li>
+    </ul>
+    <div class="tags"><span class="tag">logistics</span><span class="tag">vendor management</span></div>
+  </div>
+
+  <div class="item">
+    <h3>Project Support — Boston Consulting Group</h3>
+    <p class="meta">Indonesia</p>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="item">
+    <h3><a href="https://officelifey.com">Officelifey.com</a></h3>
+    <p class="meta">Founder</p>
+    <p>Career platform for Indonesian early-career professionals.</p>
+    <div class="tags"><span class="tag">community</span><span class="tag">careers</span></div>
+  </div>
+
+  <div class="item">
+    <h3>Si Paling Produktif</h3>
+    <p class="meta">Community lead</p>
+    <p>Indonesian AI community focused on practical AI use for work and productivity.</p>
+    <div class="tags"><span class="tag">AI literacy</span><span class="tag">community</span></div>
+  </div>
+
+  <div class="item">
+    <h3>Improving pediatric outpatient length of stay</h3>
+    <p class="meta">Research · presented at the 14th SCBTII Conference, Telkom University, 2023</p>
+    <p>Undergraduate thesis applying operations methods to reduce outpatient waiting time at a hospital.</p>
+    <div class="tags"><span class="tag">operations research</span><span class="tag">healthcare</span></div>
+  </div>
+</section>
+
+<section id="writing">
+  <h2>Writing</h2>
+  <ul class="posts">
+    <!-- Add posts here: copy one <li> per post. Newest first. -->
+    <li><span class="date">Coming soon</span><span>Notes on enforcement quality, AI governance, and APAC trust &amp; safety.</span></li>
+  </ul>
+</section>
+
+<section id="beyond">
+  <h2>Beyond work</h2>
+  <ul>
+    <li>Certified yoga teacher (RYT 200).</li>
+    <li>Content creator (20K+ followers) on fitness, wellness, travel running, and yoga.</li>
+    <li>Runner — endurance training and running while travelling.</li>
+  </ul>
+</section>
+
+<section id="education">
+  <h2>Education &amp; recognition</h2>
+  <ul>
+    <li>ITB School of Business and Management — Operations (GPA 3.75)</li>
+    <li>McKinsey Young Leaders Indonesia</li>
+    <li>XL Future Leaders scholarship recipient</li>
+    <li>National business case competition winner</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>
+    <a href="mailto:YOUR_EMAIL">Email</a> ·
+    <a href="https://www.linkedin.com/in/YOUR_LINKEDIN">LinkedIn</a> ·
+    <a href="https://github.com/YOUR_USERNAME">GitHub</a>
+  </p>
+</section>
+
+<footer>© 2026 Frisca</footer>
+
+</main>
+</body>
+</html>
