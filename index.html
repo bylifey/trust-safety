@@ -4,195 +4,435 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frisca</title>
-<meta name="description" content="Frisca — Trust & Safety and operations professional based across Singapore, Jakarta and Bali. Risk intelligence, enforcement governance, AI operations, and community building.">
+<meta name="description" content="Frisca — Trust & Safety, risk operations and AI governance in APAC. Wellbeing community building for resilience through yoga and running.">
 <meta property="og:title" content="Frisca">
-<meta property="og:description" content="Trust & Safety, risk operations and AI governance — APAC focus.">
+<meta property="og:description" content="Trust & Safety, risk operations and AI governance in APAC.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbfaf7;
-    --text: #1d1d1b;
-    --muted: #6b6a65;
-    --rule: #e4e1d9;
-    --accent: #2f5d50;
-    --tag-bg: #eef1ec;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #151514;
-      --text: #e9e7e1;
-      --muted: #9a978f;
-      --rule: #2c2b28;
-      --accent: #8fc1ae;
-      --tag-bg: #222823;
-    }
+    --bg: #faf9f5;
+    --text: #141413;
+    --muted: #6f6d66;
+    --rule: #e6e3da;
+    --chip: #ecebe4;
+    --paper: #e8e1d2;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Source Serif 4", Georgia, serif;
-    font-size: 18px;
-    line-height: 1.65;
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Source Serif 4", Georgia, serif; font-size: 18px; line-height: 1.6;
   }
-  main { max-width: 680px; margin: 0 auto; padding: 64px 20px 96px; }
-  a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-  a:hover { text-decoration-thickness: 2px; }
-  header h1 { font-size: 2.1rem; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .sub { font-family: Inter, system-ui, sans-serif; font-size: 0.85rem; color: var(--muted); margin: 0 0 24px; }
-  nav { font-family: Inter, system-ui, sans-serif; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 40px; }
-  nav a { color: var(--muted); text-decoration: none; }
-  nav a:hover { color: var(--accent); }
-  section { margin-top: 48px; }
-  h2 {
-    font-family: Inter, system-ui, sans-serif;
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted); margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  a { color: inherit; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* top bar */
+  .bar { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); position: relative; z-index: 60; }
+  .brand { font-family: Manrope, sans-serif; font-weight: 700; font-size: 1.1rem; text-decoration: none; letter-spacing: -0.01em; }
+  .bar nav { display: flex; gap: 24px; font-family: Manrope, sans-serif; font-size: 0.9rem; }
+  .bar nav a { text-decoration: none; color: var(--muted); }
+  .bar nav a:hover { color: var(--text); }
+
+  /* scroll-driven landing: tall section, sticky full-screen frame */
+  .scrolly { position: relative; height: 300vh; border-bottom: 1px solid var(--rule); }
+  .sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  .inner { height: 100%; display: flex; flex-direction: column; justify-content: center; padding-top: 12px; padding-bottom: 12px; }
+  .lead { margin-bottom: 24px; text-align: left; }
+  .lead h1 { font-family: Manrope, sans-serif; font-weight: 600; font-size: clamp(1.2rem, 2.2vw, 1.75rem); line-height: 1.2; letter-spacing: -0.02em; margin: 0; }
+  .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 24px;
+    width: min(100%, max(560px, calc((100svh - 330px) * 1.5 + 48px)));
+    margin: 0 auto;
   }
-  h3 { font-size: 1.05rem; font-weight: 600; margin: 0; }
-  p { margin: 0 0 14px; }
-  .item { margin-bottom: 28px; }
-  .meta { font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); margin: 2px 0 8px; }
-  ul { margin: 0; padding-left: 20px; }
-  li { margin-bottom: 6px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .tag { font-family: Inter, system-ui, sans-serif; font-size: 0.72rem; background: var(--tag-bg); color: var(--muted); padding: 2px 8px; border-radius: 3px; }
-  .posts li { list-style: none; display: flex; gap: 16px; margin-bottom: 8px; }
-  .posts { padding-left: 0; }
-  .posts .date { font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); min-width: 88px; padding-top: 3px; }
-  footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--rule); font-family: Inter, system-ui, sans-serif; font-size: 0.8rem; color: var(--muted); }
-  @media (max-width: 480px) {
-    body { font-size: 17px; }
-    main { padding: 40px 16px 72px; }
-    .posts li { flex-direction: column; gap: 0; }
+  .card { text-decoration: none; display: block; }
+  .card .meta { display: flex; gap: 10px; align-items: center; font-family: Manrope, sans-serif; font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+  .chip { background: var(--chip); border-radius: 999px; padding: 1px 10px; font-size: 0.72rem; }
+  .art { aspect-ratio: 1 / 1; border-radius: 4px; overflow: hidden; background: var(--paper); }
+  .art svg { width: 100%; height: 100%; display: block; transition: transform .4s ease; }
+  .card:hover .art svg { transform: scale(1.03); }
+  .card h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 1rem; line-height: 1.3; letter-spacing: -0.01em; margin: 12px 0 0; }
+  .card.soon h3 { color: var(--muted); }
+  .card p { display: none; }
+  /* text that fades in at the end of the scroll (driven by --t from JS) */
+  .fade { opacity: var(--t, 1); transform: translateY(calc((1 - var(--t, 1)) * 12px)); }
+  .js .art { opacity: 0; }
+  .js .done .art { opacity: 1; }
+
+  .stage { position: absolute; inset: 0; perspective: 1400px; pointer-events: none; z-index: 5; }
+  .done .stage { visibility: hidden; }
+  .title {
+    position: absolute; left: 0; right: 0; top: 9vh; text-align: center; z-index: 20;
+    font-family: Manrope, sans-serif; font-weight: 700; font-size: clamp(40px, 10vw, 160px);
+    line-height: .95; letter-spacing: -0.045em; will-change: transform, opacity;
+  }
+  .tile {
+    position: absolute; left: 0; top: 0; border-radius: 4px; overflow: hidden; background: var(--paper);
+    will-change: transform; opacity: 0;
+  }
+  .tile svg { width: 100%; height: 100%; display: block; }
+  .tile { border-radius: 10px; transform-origin: 50% 50%; }
+  .hint { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); font-family: Manrope, sans-serif; font-size: 0.8rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+
+  /* sections below */
+  section.block { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+  h2 { font-family: Manrope, sans-serif; font-weight: 600; font-size: 1.6rem; letter-spacing: -0.02em; margin: 0; }
+  .two { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; }
+  .side p { color: var(--muted); margin: 16px 0 0; }
+  .about p { margin: 0 0 14px; }
+  .role { padding: 24px 0; border-top: 1px solid var(--rule); }
+  .role:first-child { border-top: 0; padding-top: 0; }
+  .role h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 1.15rem; margin: 0; }
+  .role .where { font-family: Manrope, sans-serif; font-size: 0.85rem; color: var(--muted); margin: 4px 0 12px; }
+  .role ul { margin: 0; padding-left: 20px; }
+  .role li { margin-bottom: 6px; }
+  .list { list-style: none; padding: 0; margin: 32px 0 0; columns: 2; column-gap: 48px; }
+  .list li { padding: 12px 0; border-top: 1px solid var(--rule); break-inside: avoid; }
+
+  footer { padding: 48px 0 64px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-family: Manrope, sans-serif; font-size: 0.9rem; color: var(--muted); }
+  footer .links { display: flex; gap: 24px; }
+  footer a { text-decoration: none; color: var(--text); }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 720px) {
+    .title { font-size: 13vw; top: 12vh; }
+    .wrap { padding: 0 16px; }
+    .bar nav { display: none; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 14px; width: min(100%, calc((100svh - 330px) / 3 * 2 + 14px)); }
+    .card .meta { display: none; }
+    .card h3 { font-size: 0.85rem; margin-top: 6px; }
+    .scrolly { height: 260vh; }
+    .two { grid-template-columns: 1fr; gap: 24px; }
+    .list { columns: 1; }
+    section.block { padding: 48px 0; }
+    .lead { margin-bottom: 14px; }
   }
 </style>
 </head>
 <body>
-<main>
+<script>document.documentElement.classList.add("js");</script>
 
-<header>
-  <h1>Frisca</h1>
-  <p class="sub">Trust &amp; Safety · Risk Operations · AI Governance — Singapore / Jakarta / Bali</p>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#work">Work</a>
-    <a href="#projects">Projects</a>
-    <a href="#writing">Writing</a>
-    <a href="#beyond">Beyond work</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<!-- Shared SVG patterns -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M16 0H0V16" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.4" fill="#1d3a12" fill-opacity=".55"/>
+    </pattern>
+    <pattern id="lines" width="400" height="22" patternUnits="userSpaceOnUse">
+      <path d="M0 21H400" stroke="#2a2a28" stroke-opacity=".35"/>
+    </pattern>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <path d="M0 0V7" stroke="#f2c7bd" stroke-width="2"/>
+    </pattern>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#15171c"/><stop offset=".55" stop-color="#2d4a7a"/><stop offset=".8" stop-color="#7fa6e0"/><stop offset="1" stop-color="#f3f1ea"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .18 0"/></filter>
+  </defs>
+</svg>
 
-<section id="about">
-  <h2>About</h2>
-  <p>I work on Trust &amp; Safety and operations — finding patterns in abuse, governing enforcement systems, and briefing decision-makers on what the data shows. Most of my work has focused on child safety and enforcement quality in Indonesia and the wider APAC region.</p>
-  <p>I care about how AI-mediated enforcement affects real users, especially in markets where local language and context are under-represented. I'm interested in investigative risk operations, intelligence work, and AI governance.</p>
-  <p>Outside work, I build communities for Indonesian early-career professionals and AI learners, teach yoga, and run.</p>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="#">Frisca</a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+</div>
+
+<!-- LANDING / PORTFOLIO: scroll drives the animation -->
+<section id="work" class="scrolly">
+  <div class="sticky">
+    <div class="wrap inner">
+    <div class="lead fade">
+      <h1>Trust &amp; Safety, risk operations, and AI governance in APAC.</h1>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="https://github.com/bylifey/trust-safety/tree/main/one-word-trap">
+        <div class="meta fade"><span class="chip">Case study</span><span>Nov 2026</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#e8e1d2"/>
+            <rect width="400" height="400" fill="url(#lines)"/>
+            <rect x="0" y="0" width="190" height="400" fill="#4f6f9a" opacity=".85"/>
+            <rect x="0" y="0" width="190" height="400" fill="url(#grid)"/>
+            <rect x="40" y="120" width="300" height="26" fill="#d9533f"/>
+            <rect x="140" y="210" width="220" height="26" fill="#d9533f" opacity=".9"/>
+            <path d="M20 330 Q 80 300 120 335 T 220 320 T 330 340 T 390 315" fill="none" stroke="#141413" stroke-width="2"/>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">The One-Word Trap: AI misattribution in an Indonesian case</h3>
+        <p>Cross-model eval of how 10 LLMs answer an allegation-laden prompt about Komdigi.</p>
+      </a>
+
+      <a class="card" href="https://officelifey.com">
+        <div class="meta fade"><span class="chip">Founder</span><span>Officelifey.com</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#9ab5de"/>
+            <rect width="400" height="400" fill="url(#grid)"/>
+            <rect width="44" height="400" fill="#77756c"/>
+            <g>
+              <circle cx="120" cy="120" r="20" fill="#7b8f6a"/><circle cx="180" cy="120" r="20" fill="#b9a48f"/><circle cx="240" cy="120" r="20" fill="#d98c76"/><circle cx="300" cy="120" r="20" fill="#30478c"/>
+              <circle cx="120" cy="180" r="20" fill="#30478c"/><circle cx="180" cy="180" r="20" fill="#3e6a3a"/><circle cx="240" cy="180" r="20" fill="#7b8f6a"/><circle cx="300" cy="180" r="20" fill="#b9a48f"/>
+              <circle cx="120" cy="240" r="20" fill="#d98c76"/><circle cx="180" cy="240" r="20" fill="#30478c"/><circle cx="240" cy="240" r="20" fill="#3e6a3a"/><circle cx="300" cy="240" r="20" fill="#d9533f"/>
+              <circle cx="120" cy="300" r="20" fill="#b9a48f"/><circle cx="180" cy="300" r="20" fill="#d98c76"/><circle cx="240" cy="300" r="20" fill="#30478c"/><circle cx="300" cy="300" r="20" fill="#7b8f6a"/>
+            </g>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">Officelifey: careers for Indonesian early-career professionals</h3>
+        <p>Career platform and community for people starting out in Indonesia.</p>
+      </a>
+
+      <a class="card" href="#">
+        <div class="meta fade"><span class="chip">Community</span><span>Si Paling Produktif</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#d6d0c4"/>
+            <circle cx="110" cy="110" r="44" fill="#62c64a"/><circle cx="110" cy="110" r="44" fill="url(#dots)"/>
+            <circle cx="210" cy="110" r="44" fill="#62c64a"/><circle cx="210" cy="110" r="44" fill="url(#dots)"/>
+            <circle cx="310" cy="210" r="44" fill="#62c64a"/><circle cx="310" cy="210" r="44" fill="url(#dots)"/>
+            <circle cx="210" cy="210" r="44" fill="#e8463e"/>
+            <circle cx="110" cy="310" r="44" fill="#62c64a"/><circle cx="110" cy="310" r="44" fill="url(#dots)"/>
+            <circle cx="260" cy="320" r="44" fill="#62c64a"/><circle cx="260" cy="320" r="44" fill="url(#dots)"/>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">Si Paling Produktif: an Indonesian AI community</h3>
+        <p>Practical AI literacy for work, beyond tool exposure to impact and risk.</p>
+      </a>
+
+      <a class="card" href="#">
+        <div class="meta fade"><span class="chip">Research</span><span>Jul 2023</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#c7b9cf"/>
+            <rect y="230" width="400" height="170" fill="#7b8f6a"/>
+            <rect x="70" y="60" width="260" height="290" rx="8" fill="#7fe39a" opacity=".85"/>
+            <g fill="#c7b9cf" opacity=".9">
+              <circle cx="115" cy="105" r="18"/><rect x="155" y="88" width="34" height="34"/><circle cx="225" cy="105" r="12"/><path d="M270 90 L305 120 L270 120Z"/>
+              <circle cx="115" cy="165" r="12"/><rect x="155" y="152" width="26" height="26"/><path d="M240 145 l20 12 v24 l-20 12 l-20 -12 v-24z"/><circle cx="290" cy="170" r="20"/>
+              <circle cx="120" cy="240" r="26"/><rect x="170" y="226" width="20" height="20"/><path d="M240 215 l26 15 v30 l-26 15 l-26 -15 v-30z"/>
+              <rect x="100" y="300" width="200" height="8" rx="4"/>
+            </g>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">Reducing pediatric outpatient length of stay</h3>
+        <p>Operations research, presented at the 14th SCBTII Conference.</p>
+      </a>
+
+      <a class="card" href="#beyond">
+        <div class="meta fade"><span class="chip">Wellbeing</span><span>Ongoing</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="url(#sky)"/>
+            <circle cx="300" cy="90" r="2" fill="#fff" opacity=".7"/><circle cx="90" cy="60" r="1.5" fill="#fff" opacity=".6"/>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">Resilience through yoga and running</h3>
+        <p>Wellbeing community building as an RYT 200 teacher and runner.</p>
+      </a>
+
+      <a class="card soon" href="#">
+        <div class="meta fade"><span class="chip">Writing</span><span>Coming soon</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#efe6d4"/>
+            <rect x="200" width="200" height="400" fill="#2b1d1b"/>
+            <rect x="200" y="120" width="200" height="140" fill="url(#hatch)"/>
+            <rect x="80" y="110" width="60" height="230" fill="#d9cfbd" stroke="#2a2a28" stroke-width="2"/>
+            <path d="M70 110 L110 70 L150 110Z" fill="#2a2a28"/>
+            <rect x="100" y="160" width="20" height="40" fill="#2a2a28"/>
+            <path d="M0 360 Q 100 320 200 360 T 400 340" fill="none" stroke="#f3efe6" stroke-width="2"/>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">Notes on enforcement quality in APAC</h3>
+        <p>Writing on over/underenforcement, appeals, and AI-mediated decisions.</p>
+      </a>
+
+    </div>
+    </div>
+    <div class="stage">
+      <div class="title">Protecting<br>Communities</div>
+      <div class="hint">Scroll ↓</div>
+    </div>
+  </div>
 </section>
 
-<section id="work">
-  <h2>Work</h2>
+<div class="wrap">
+  <!-- ABOUT -->
+  <section id="about" class="block">
+    <div class="two">
+      <div class="side"><h2>About</h2></div>
+      <div class="about">
+        <p>I find patterns in abuse, govern enforcement systems, and brief decision-makers on what the data shows — with a focus on Indonesia and Southeast Asia.</p>
+        <p>Outside work: wellbeing community building for resilience through yoga and running.</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="item">
-    <h3>Trust &amp; Safety Operations / Market Risk Specialist — Meta</h3>
-    <p class="meta">APAC · Singapore</p>
-    <ul>
-      <li>Led detection tooling implementation for child safety: 4k monthly CSAM enforcement, 10% NCMEC escalation.</li>
-      <li>Collaborated on AI detection signals for child sexual solicitation in Instagram messaging; true positive rate 60% → 75%.</li>
-      <li>Managed child safety network disruption (~2k accounts).</li>
-      <li>Governed 50+ automated enforcement pipelines with &gt;98% accuracy compliance; monitored over/underenforcement in the Indonesian market.</li>
-      <li>Led RCA on a 230% human review volume surge; identified irrelevant classifiers and reduced volume by 80%.</li>
-      <li>Drove 15% vendor quality improvement through training and AI-assisted curriculum.</li>
-      <li>Updated 3+ law enforcement response guidelines for regulatory alignment; processed LERT documents for Indonesian markets.</li>
-      <li>Achieved 80% enforcement rate on priority threat landscape monitoring; top P0/P1 closer on business continuity plan.</li>
+  <!-- EXPERIENCE -->
+  <section id="experience" class="block">
+    <div class="two">
+      <div class="side">
+        <h2>Experience</h2>
+        <p>~3 years across Trust &amp; Safety, logistics operations, and consulting in Singapore and Indonesia.</p>
+      </div>
+      <div>
+        <div class="role">
+          <h3>Trust &amp; Safety Operations / Market Risk Specialist — Meta</h3>
+          <p class="where">APAC · Singapore</p>
+          <ul>
+            <li>Led detection tooling implementation for child safety: 4k monthly CSAM enforcement, 10% NCMEC escalation.</li>
+            <li>Collaborated on AI detection signals for child sexual solicitation in Instagram messaging; true positive rate 60% → 75%.</li>
+            <li>Governed 50+ automated enforcement pipelines with &gt;98% accuracy compliance; monitored over/underenforcement in the Indonesian market.</li>
+            <li>Led RCA on a 230% human review volume surge; identified irrelevant classifiers and reduced volume by 80%.</li>
+            <li>Drove 15% vendor quality improvement through training and AI-assisted curriculum.</li>
+            <li>Updated 3+ law enforcement response guidelines for regulatory alignment; top P0/P1 closer on business continuity plan.</li>
+          </ul>
+        </div>
+        <div class="role">
+          <h3>Associate Project Manager — Shopee Express</h3>
+          <p class="where">Indonesia</p>
+          <ul><li>Collaborated with vendor management on vendor decisions; managed 6+ outsourced truck contracts (SLA, pricing).</li></ul>
+        </div>
+        <div class="role">
+          <h3>Project Support — Boston Consulting Group</h3>
+          <p class="where">Indonesia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEYOND / EDUCATION -->
+  <section id="beyond" class="block">
+    <h2>Beyond work &amp; recognition</h2>
+    <ul class="list">
+      <li>Certified yoga teacher (RYT 200)</li>
+      <li>Content creator (20K+) — fitness, wellness, travel running, yoga</li>
+      <li>ITB School of Business and Management — Operations (GPA 3.75)</li>
+      <li>McKinsey Young Leaders Indonesia</li>
+      <li>XL Future Leaders scholarship recipient</li>
+      <li>National business case competition winner</li>
     </ul>
-    <div class="tags"><span class="tag">child safety</span><span class="tag">investigations</span><span class="tag">enforcement governance</span><span class="tag">LLM evaluation</span><span class="tag">vendor quality</span></div>
-  </div>
+  </section>
 
-  <div class="item">
-    <h3>Associate Project Manager — Shopee Express</h3>
-    <p class="meta">Indonesia</p>
-    <ul>
-      <li>Collaborated with vendor management on vendor decisions; managed 6+ outsourced truck contracts (SLA, pricing).</li>
-    </ul>
-    <div class="tags"><span class="tag">logistics</span><span class="tag">vendor management</span></div>
-  </div>
+  <footer id="contact">
+    <span>© 2026 Frisca · Singapore / Jakarta / Bali</span>
+    <div class="links">
+      <a href="mailto:YOUR_EMAIL">Email</a>
+      <a href="https://www.linkedin.com/in/YOUR_LINKEDIN">LinkedIn</a>
+      <a href="https://github.com/bylifey">GitHub</a>
+    </div>
+  </footer>
+</div>
 
-  <div class="item">
-    <h3>Project Support — Boston Consulting Group</h3>
-    <p class="meta">Indonesia</p>
-  </div>
-</section>
+<script>
+(function () {
+  var section = document.getElementById('work');
+  var sticky = section.querySelector('.sticky');
+  var stage = section.querySelector('.stage');
+  var title = stage.querySelector('.title'), hint = stage.querySelector('.hint');
+  var arts = Array.prototype.slice.call(section.querySelectorAll('.card .art'));
+  var fades = Array.prototype.slice.call(section.querySelectorAll('.fade'));
+  var svgs = arts.map(function (a) { return a.innerHTML; });
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<section id="projects">
-  <h2>Projects</h2>
+  if (reduce) { section.style.height = 'auto'; sticky.classList.add('done'); return; }
 
-  <div class="item">
-    <h3><a href="https://officelifey.com">Officelifey.com</a></h3>
-    <p class="meta">Founder</p>
-    <p>Career platform for Indonesian early-career professionals.</p>
-    <div class="tags"><span class="tag">community</span><span class="tag">careers</span></div>
-  </div>
+  // Ring of square tiles: the six projects, twice around.
+  var N = arts.length * 2;
+  var tiles = [];
+  for (var i = 0; i < N; i++) {
+    var t = document.createElement('div');
+    t.className = 'tile'; t.innerHTML = svgs[i % arts.length];
+    stage.appendChild(t); tiles.push(t);
+  }
 
-  <div class="item">
-    <h3>Si Paling Produktif</h3>
-    <p class="meta">Community lead</p>
-    <p>Indonesian AI community focused on practical AI use for work and productivity.</p>
-    <div class="tags"><span class="tag">AI literacy</span><span class="tag">community</span></div>
-  </div>
+  var W, H, S, R, CX, CY, P = 1600, TILT = 22 * Math.PI / 180, targets = [];
+  function measure() {
+    W = sticky.clientWidth; H = sticky.clientHeight;
+    var mobile = W < 720;
+    R = Math.min(mobile ? W * 0.46 : W * 0.34, 500, H * 0.5);
+    S = Math.round(R * (mobile ? 0.46 : 0.4));
+    CX = W / 2; CY = H * (mobile ? 0.58 : 0.56);
+    tiles.forEach(function (t) { t.style.width = t.style.height = S + 'px'; });
+    var base = sticky.getBoundingClientRect();
+    targets = arts.map(function (a) { var r = a.getBoundingClientRect(); return { x: r.left - base.left + r.width / 2, y: r.top - base.top + r.height / 2, w: r.width }; });
+  }
 
-  <div class="item">
-    <h3>Improving pediatric outpatient length of stay</h3>
-    <p class="meta">Research · presented at the 14th SCBTII Conference, Telkom University, 2023</p>
-    <p>Undergraduate thesis applying operations methods to reduce outpatient waiting time at a hospital.</p>
-    <div class="tags"><span class="tag">operations research</span><span class="tag">healthcare</span></div>
-  </div>
-</section>
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function ease(v) { return v < .5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function wrap(deg) { deg = ((deg + 180) % 360 + 360) % 360 - 180; return deg; }
 
-<section id="writing">
-  <h2>Writing</h2>
-  <ul class="posts">
-    <!-- Add posts here: copy one <li> per post. Newest first. -->
-    <li><span class="date">Coming soon</span><span>Notes on enforcement quality, AI governance, and APAC trust &amp; safety.</span></li>
-  </ul>
-</section>
+  var spin = 0, last = performance.now();
 
-<section id="beyond">
-  <h2>Beyond work</h2>
-  <ul>
-    <li>Certified yoga teacher (RYT 200).</li>
-    <li>Content creator (20K+ followers) on fitness, wellness, travel running, and yoga.</li>
-    <li>Runner — endurance training and running while travelling.</li>
-  </ul>
-</section>
+  function render(now) {
+    var dt = Math.min(64, now - last); last = now;
+    var rect = section.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > H) return;   // off screen: skip work
 
-<section id="education">
-  <h2>Education &amp; recognition</h2>
-  <ul>
-    <li>ITB School of Business and Management — Operations (GPA 3.75)</li>
-    <li>McKinsey Young Leaders Indonesia</li>
-    <li>XL Future Leaders scholarship recipient</li>
-    <li>National business case competition winner</li>
-  </ul>
-</section>
+    var p = clamp(-rect.top / (section.offsetHeight - H));
+    // ring keeps turning (slows down as tiles leave it)
+    var flow = clamp((p - 0.12) / 0.7);
+    spin += dt * 0.012 * (1 - flow);
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>
-    <a href="mailto:YOUR_EMAIL">Email</a> ·
-    <a href="https://www.linkedin.com/in/YOUR_LINKEDIN">LinkedIn</a> ·
-    <a href="https://github.com/YOUR_USERNAME">GitHub</a>
-  </p>
-</section>
+    // title fades and lifts away as tiles start flowing
+    var to = 1 - clamp((p - 0.1) / 0.25);
+    title.style.opacity = to;
+    title.style.transform = 'translateY(' + ((1 - to) * -40) + 'px)';
+    hint.style.opacity = 1 - clamp(p / 0.05);
 
-<footer>© 2026 Frisca</footer>
+    for (var i = 0; i < N; i++) {
+      var t = tiles[i];
+      var thDeg = wrap(spin + i * 360 / N);
+      var th = thDeg * Math.PI / 180;
+      // ring position, projected with a tilt so the front sits lower and closer
+      var X = R * Math.sin(th), Z = R * Math.cos(th);
+      var y3 = Z * Math.sin(TILT), z3 = Z * Math.cos(TILT);
+      var k = P / (P - z3);
+      var rx = CX + X * k, ry = CY + y3 * k, rs = k;
 
-</main>
+      // flow into the grid: tile i and its twin (i + 6) both head to card i % 6
+      var g = targets[i % arts.length];
+      var q = ease(clamp((flow - (i % arts.length) * 0.05) / 0.7));
+      var twin = i >= arts.length;
+      var x = lerp(rx, g.x, q), y = lerp(ry, g.y, q);
+      var sc = lerp(rs, g.w / S, q);
+      var rotY = lerp(-thDeg, 0, q);
+      var rotX = lerp(-TILT * 57.3 * 0.6, 0, q);
+
+      t.style.opacity = twin ? 1 - clamp((q - 0.55) / 0.35) : 1;
+      t.style.zIndex = q > 0.4 ? 40 : (Z > 0 ? 30 : 10);  // front half passes in front of the title, back half behind
+      t.style.transform = 'translate3d(' + (x - S / 2) + 'px,' + (y - S / 2) + 'px,0) scale(' + sc + ') perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)';
+      t.style.borderRadius = lerp(10, 4, q) / sc + 'px';
+    }
+
+    var tt = clamp((p - 0.85) / 0.13);
+    fades.forEach(function (f) { f.style.setProperty('--t', tt); });
+    sticky.classList.toggle('done', p >= 0.99);
+  }
+
+  function loop(now) { render(now); requestAnimationFrame(loop); }
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+  measure();
+  requestAnimationFrame(loop);
+})();
+</script>
 </body>
 </html>
