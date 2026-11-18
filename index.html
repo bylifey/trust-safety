@@ -30,7 +30,10 @@
   .wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
 
   /* top bar */
-  .bar { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); position: relative; z-index: 60; }
+  :root { --hh: 64px; }
+  html { scroll-padding-top: var(--hh); }
+  .topbar { position: sticky; top: 0; z-index: 80; background: rgba(250, 249, 245, .86); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--rule); }
+  .bar { display: flex; justify-content: space-between; align-items: center; height: var(--hh); }
   .brand { font-family: Manrope, sans-serif; font-weight: 700; font-size: 1.1rem; text-decoration: none; letter-spacing: -0.01em; }
   .bar nav { display: flex; gap: 24px; font-family: Manrope, sans-serif; font-size: 0.9rem; }
   .bar nav a { text-decoration: none; color: var(--muted); }
@@ -38,15 +41,25 @@
 
   /* scroll-driven landing: tall section, sticky full-screen frame */
   .scrolly { position: relative; height: 300vh; border-bottom: 1px solid var(--rule); }
-  .sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+  .sticky { position: sticky; top: var(--hh); height: calc(100vh - var(--hh)); height: calc(100svh - var(--hh)); overflow: hidden; }
   .inner { height: 100%; display: flex; flex-direction: column; justify-content: center; padding-top: 12px; padding-bottom: 12px; }
   .lead { margin-bottom: 24px; text-align: left; }
   .lead h1 { font-family: Manrope, sans-serif; font-weight: 600; font-size: clamp(1.2rem, 2.2vw, 1.75rem); line-height: 1.2; letter-spacing: -0.02em; margin: 0; }
   .grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 24px;
-    width: min(100%, max(560px, calc((100svh - 330px) * 1.5 + 48px)));
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 24px;
+    width: 100%;
     margin: 0 auto;
   }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
+  .filters button {
+    font-family: Manrope, sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--text);
+    background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .filters button:hover { border-color: var(--muted); }
+  .filters button.on { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .card[hidden] { display: none; }
+  .empty { grid-column: 1 / -1; margin: 40px 0; text-align: center; font-family: Manrope, sans-serif; color: var(--muted); }
   .card { text-decoration: none; display: block; }
   .card .meta { display: flex; gap: 10px; align-items: center; font-family: Manrope, sans-serif; font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
   .chip { background: var(--chip); border-radius: 999px; padding: 1px 10px; font-size: 0.72rem; }
@@ -63,18 +76,32 @@
 
   .stage { position: absolute; inset: 0; perspective: 1400px; pointer-events: none; z-index: 5; }
   .done .stage { visibility: hidden; }
+  .intro { position: absolute; left: 0; right: 0; top: 7vh; text-align: center; z-index: 20; padding: 0 16px; will-change: transform, opacity; }
+  .hi { font-family: Manrope, sans-serif; font-weight: 500; font-size: clamp(16px, 1.6vw, 24px); letter-spacing: -0.01em; margin: 0 0 10px; }
   .title {
-    position: absolute; left: 0; right: 0; top: 9vh; text-align: center; z-index: 20;
-    font-family: Manrope, sans-serif; font-weight: 700; font-size: clamp(40px, 10vw, 160px);
-    line-height: .95; letter-spacing: -0.045em; will-change: transform, opacity;
+    font-family: Manrope, sans-serif; font-weight: 700; font-size: clamp(40px, 8.2vw, 128px);
+    line-height: .95; letter-spacing: -0.045em; margin: 0;
   }
+  .outro {
+    position: absolute; left: 50%; bottom: 64px; transform: translateX(-50%); z-index: 35;
+    width: min(680px, calc(100% - 32px)); text-align: center; margin: 0;
+    font-size: clamp(15px, 1.25vw, 19px); line-height: 1.55; color: var(--text); will-change: opacity;
+  }
+  .outro em { font-style: normal; color: var(--muted); }
+  .intro{top:0;bottom:0;left:6vw;right:auto;width:44vw;display:flex;flex-direction:column;justify-content:center;text-align:left;padding:0}
+  .title{font-size:clamp(40px,6vw,104px)}
+  .sub{max-width:520px;margin:22px 0 0;font-family:Manrope,sans-serif;font-size:clamp(15px,1.15vw,18px);line-height:1.55;color:var(--text)}
+  .sub em{font-style:normal;color:var(--muted)}
+  @media (max-width:720px){.intro{left:0;right:0;width:auto;bottom:auto;top:5vh;text-align:center;padding:0 16px}.title{font-size:12vw}.sub{font-size:14px;margin:12px auto 0}}
   .tile {
     position: absolute; left: 0; top: 0; border-radius: 4px; overflow: hidden; background: var(--paper);
     will-change: transform; opacity: 0;
   }
   .tile svg { width: 100%; height: 100%; display: block; }
+  .tile .f, .tile .a { position: absolute; inset: 0; }
+  .tile .a { opacity: 0; }
   .tile { border-radius: 10px; transform-origin: 50% 50%; }
-  .hint { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); font-family: Manrope, sans-serif; font-size: 0.8rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .hint { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-family: Manrope, sans-serif; font-size: 0.8rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
 
   /* sections below */
   section.block { padding: 72px 0; border-bottom: 1px solid var(--rule); }
@@ -91,16 +118,98 @@
   .list { list-style: none; padding: 0; margin: 32px 0 0; columns: 2; column-gap: 48px; }
   .list li { padding: 12px 0; border-top: 1px solid var(--rule); break-inside: avoid; }
 
+
+  /* experience timeline */
+  .xp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .xp-head p { margin: 0; color: var(--muted); font-family: Manrope, sans-serif; font-size: .9rem; }
+  .timeline { position: relative; }
+  .stops { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+  .track { position: absolute; left: 12.5%; right: 12.5%; top: 44px; height: 3px; background: var(--rule); border-radius: 3px; }
+  .track .fill { position: absolute; inset: 0; width: 0; background: var(--text); border-radius: 3px; transition: width 1.4s cubic-bezier(.3,.7,.2,1); }
+  .timeline.in .track .fill { width: 100%; }
+  .stop {
+    all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 0 6px 12px; border-radius: 12px; font-family: Manrope, sans-serif;
+    opacity: 0; transform: translateY(14px); transition: opacity .5s ease var(--d), transform .5s ease var(--d);
+  }
+  .timeline.in .stop { opacity: 1; transform: none; }
+  .stop:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+  .node {
+    position: relative; width: 88px; height: 88px; border-radius: 22px; display: grid; place-items: center;
+    box-shadow: 0 0 0 6px var(--bg); transform: scale(.6); transition: transform .5s cubic-bezier(.3,1.6,.5,1) var(--d), box-shadow .2s;
+  }
+  .timeline.in .node { transform: scale(1); }
+  .node svg { width: 64px; height: 64px; }
+  @media (hover: hover) { .stop:hover .node { transform: scale(1.06) rotate(-3deg); transition-delay: 0s; } }
+  .stop.on .node { box-shadow: 0 0 0 6px var(--bg), 0 0 0 9px var(--text); }
+  .now {
+    position: absolute; top: -10px; right: -14px; background: #d9533f; color: #fff; font-size: .68rem; font-weight: 700;
+    letter-spacing: .04em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px;
+  }
+  .now::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: #d9533f; z-index: -1; animation: ping 1.8s ease-out infinite; }
+  @keyframes ping { from { transform: scale(1); opacity: .6; } to { transform: scale(1.8); opacity: 0; } }
+  .yr { margin-top: 18px; font-size: .78rem; color: var(--muted); }
+  .org { margin-top: 4px; font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
+  .rl { margin-top: 2px; font-size: .88rem; color: var(--muted); }
+  .details { margin-top: 32px; max-width: 820px; margin-left: auto; margin-right: auto; background: #f2efe7; border-radius: 16px; padding: 28px 32px; }
+  .detail h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 1.15rem; margin: 0; }
+  .detail .where { font-family: Manrope, sans-serif; font-size: .85rem; color: var(--muted); margin: 4px 0 14px; }
+  .detail ul { margin: 0; padding-left: 20px; }
+  .detail li { margin-bottom: 6px; }
+  .detail:not([hidden]) { animation: rise .35s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 720px) {
+    .stops { grid-template-columns: 1fr; gap: 6px; }
+    .track { left: 47px; right: auto; top: 30px; bottom: 30px; width: 3px; height: auto; }
+    .track .fill { width: 100%; height: 0; transition: height 1.4s cubic-bezier(.3,.7,.2,1); }
+    .timeline.in .track .fill { height: 100%; width: 100%; }
+    .stop { display: grid; grid-template-columns: 76px 1fr; padding-left: 10px !important; grid-template-rows: auto auto auto; column-gap: 14px; text-align: left; align-items: center; padding: 6px 0; }
+    .node { grid-row: 1 / 4; width: 76px; height: 76px; border-radius: 18px; }
+    .node svg { width: 54px; height: 54px; }
+    .yr { margin: 0; } .org { margin: 0; font-size: 1rem; } .rl { margin: 0; }
+    .details { padding: 20px; margin-top: 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stop, .node, .track .fill { transition: none !important; }
+    .now::before { animation: none; }
+  }
+
+  /* contact */
+  .contact { padding: 96px 0 72px; text-align: center; border-bottom: 1px solid var(--rule); }
+  .avatars { display: flex; justify-content: center; margin-bottom: 28px; }
+  .av { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; margin-left: -12px; box-shadow: 0 0 0 4px var(--bg); transition: transform .25s ease; }
+  .av:first-child { margin-left: 0; }
+  .av svg { width: 100%; height: 100%; display: block; }
+  @media (hover: hover) { .avatars:hover .av { transform: translateY(-6px); } .avatars:hover .av:nth-child(even) { transform: translateY(-2px); } }
+  .contact h2 { font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.03em; margin: 0 0 14px; }
+  .contact > p { max-width: 560px; margin: 0 auto; color: var(--muted); font-size: 1.05rem; }
+  .reach { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 32px 0 18px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-family: Manrope, sans-serif; font-weight: 600; font-size: .95rem;
+    padding: 12px 22px; border-radius: 999px; border: 1px solid var(--text); color: var(--text); transition: transform .2s ease, background .2s, color .2s;
+  }
+  .btn svg { width: 18px; height: 18px; }
+  .btn.primary { background: var(--text); color: var(--bg); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:not(.primary):hover { background: var(--text); color: var(--bg); }
+  .addr { font-family: Manrope, sans-serif; font-size: .82rem; color: var(--muted); margin: 0; }
+  @media (max-width: 720px) { .contact { padding: 64px 0 48px; } .av { width: 52px; height: 52px; } .btn { width: 100%; justify-content: center; } }
+
   footer { padding: 48px 0 64px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-family: Manrope, sans-serif; font-size: 0.9rem; color: var(--muted); }
   footer .links { display: flex; gap: 24px; }
   footer a { text-decoration: none; color: var(--text); }
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 720px) {
-    .title { font-size: 13vw; top: 12vh; }
+    .intro { top: 5vh; }
+    .title { font-size: 13vw; }
+    .hi { font-size: 15px; margin-bottom: 6px; }
+    .outro { bottom: 52px; font-size: 14px; line-height: 1.5; }
     .wrap { padding: 0 16px; }
-    .bar nav { display: none; }
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 14px; width: min(100%, calc((100svh - 330px) / 3 * 2 + 14px)); }
+    .bar nav { gap: 14px; font-size: .8rem; }
+    .bar nav a[href="#about"] { display: none; }
+    .brand { font-size: 1rem; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 14px; width: min(100%, calc((100svh - 300px) + 14px)); }
     .card .meta { display: none; }
     .card h3 { font-size: 0.85rem; margin-top: 6px; }
     .scrolly { height: 260vh; }
@@ -108,6 +217,9 @@
     .list { columns: 1; }
     section.block { padding: 48px 0; }
     .lead { margin-bottom: 14px; }
+    .filters { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 16px; padding: 0 16px 4px; scrollbar-width: none; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filters button { flex: none; }
   }
 </style>
 </head>
@@ -134,30 +246,43 @@
   </defs>
 </svg>
 
+<div class="topbar">
 <div class="wrap">
   <header class="bar">
-    <a class="brand" href="#">Frisca</a>
+    <a class="brand" href="#">Frisca Nadya</a>
     <nav>
-      <a href="#work">Work</a>
       <a href="#about">About</a>
+      <a href="#work">Work</a>
       <a href="#experience">Experience</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
-
+</div>
 </div>
 
 <!-- LANDING / PORTFOLIO: scroll drives the animation -->
-<section id="work" class="scrolly">
+<section id="about" class="scrolly">
+  <span id="work" style="position:absolute;top:calc(100% - 100vh + var(--hh))"></span>
   <div class="sticky">
     <div class="wrap inner">
     <div class="lead fade">
       <h1>Trust &amp; Safety, risk operations, and AI governance in APAC.</h1>
     </div>
+    <div class="filters fade" role="group" aria-label="Filter work">
+      <button type="button" data-f="tns" class="on" aria-pressed="true">Trust &amp; Safety</button>
+      <button type="button" data-f="ops" aria-pressed="false">Operations research</button>
+      <button type="button" data-f="competition" aria-pressed="false">Competition</button>
+      <button type="button" data-f="speaker" aria-pressed="false">Speaker</button>
+      <button type="button" data-f="leadership" aria-pressed="false">Leadership</button>
+      <button type="button" data-f="marathon" aria-pressed="false">Marathon</button>
+      <button type="button" data-f="yoga" aria-pressed="false">Yoga</button>
+      <button type="button" data-f="all" aria-pressed="false">All</button>
+    </div>
     <div class="grid">
+      <p class="empty" hidden>More coming soon for this topic.</p>
 
-      <a class="card" href="https://github.com/bylifey/trust-safety/tree/main/one-word-trap">
-        <div class="meta fade"><span class="chip">Case study</span><span>Nov 2026</span></div>
+      <a class="card" data-cat="tns" href="https://github.com/bylifey/trust-safety/tree/main/one-word-trap">
+        <div class="meta fade"><span class="chip">Trust &amp; Safety</span><span>Nov 2026</span></div>
         <div class="art">
           <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
             <rect width="400" height="400" fill="#e8e1d2"/>
@@ -174,46 +299,8 @@
         <p>Cross-model eval of how 10 LLMs answer an allegation-laden prompt about Komdigi.</p>
       </a>
 
-      <a class="card" href="https://officelifey.com">
-        <div class="meta fade"><span class="chip">Founder</span><span>Officelifey.com</span></div>
-        <div class="art">
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#9ab5de"/>
-            <rect width="400" height="400" fill="url(#grid)"/>
-            <rect width="44" height="400" fill="#77756c"/>
-            <g>
-              <circle cx="120" cy="120" r="20" fill="#7b8f6a"/><circle cx="180" cy="120" r="20" fill="#b9a48f"/><circle cx="240" cy="120" r="20" fill="#d98c76"/><circle cx="300" cy="120" r="20" fill="#30478c"/>
-              <circle cx="120" cy="180" r="20" fill="#30478c"/><circle cx="180" cy="180" r="20" fill="#3e6a3a"/><circle cx="240" cy="180" r="20" fill="#7b8f6a"/><circle cx="300" cy="180" r="20" fill="#b9a48f"/>
-              <circle cx="120" cy="240" r="20" fill="#d98c76"/><circle cx="180" cy="240" r="20" fill="#30478c"/><circle cx="240" cy="240" r="20" fill="#3e6a3a"/><circle cx="300" cy="240" r="20" fill="#d9533f"/>
-              <circle cx="120" cy="300" r="20" fill="#b9a48f"/><circle cx="180" cy="300" r="20" fill="#d98c76"/><circle cx="240" cy="300" r="20" fill="#30478c"/><circle cx="300" cy="300" r="20" fill="#7b8f6a"/>
-            </g>
-            <rect width="400" height="400" filter="url(#grain)"/>
-          </svg>
-        </div>
-        <h3 class="fade">Officelifey: careers for Indonesian early-career professionals</h3>
-        <p>Career platform and community for people starting out in Indonesia.</p>
-      </a>
-
-      <a class="card" href="#">
-        <div class="meta fade"><span class="chip">Community</span><span>Si Paling Produktif</span></div>
-        <div class="art">
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="#d6d0c4"/>
-            <circle cx="110" cy="110" r="44" fill="#62c64a"/><circle cx="110" cy="110" r="44" fill="url(#dots)"/>
-            <circle cx="210" cy="110" r="44" fill="#62c64a"/><circle cx="210" cy="110" r="44" fill="url(#dots)"/>
-            <circle cx="310" cy="210" r="44" fill="#62c64a"/><circle cx="310" cy="210" r="44" fill="url(#dots)"/>
-            <circle cx="210" cy="210" r="44" fill="#e8463e"/>
-            <circle cx="110" cy="310" r="44" fill="#62c64a"/><circle cx="110" cy="310" r="44" fill="url(#dots)"/>
-            <circle cx="260" cy="320" r="44" fill="#62c64a"/><circle cx="260" cy="320" r="44" fill="url(#dots)"/>
-            <rect width="400" height="400" filter="url(#grain)"/>
-          </svg>
-        </div>
-        <h3 class="fade">Si Paling Produktif: an Indonesian AI community</h3>
-        <p>Practical AI literacy for work, beyond tool exposure to impact and risk.</p>
-      </a>
-
-      <a class="card" href="#">
-        <div class="meta fade"><span class="chip">Research</span><span>Jul 2023</span></div>
+      <a class="card" data-cat="ops" href="https://digilib.itb.ac.id/gdl/view_data/memperbaiki-length-of-stay-los-rawat-jalan-di-departemen-pediatrik-rumah-sakit-xyz" target="_blank" rel="noopener">
+        <div class="meta fade"><span class="chip">Operations research</span><span>2023</span></div>
         <div class="art">
           <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
             <rect width="400" height="400" fill="#c7b9cf"/>
@@ -228,73 +315,131 @@
             <rect width="400" height="400" filter="url(#grain)"/>
           </svg>
         </div>
-        <h3 class="fade">Reducing pediatric outpatient length of stay</h3>
-        <p>Operations research, presented at the 14th SCBTII Conference.</p>
+        <h3 class="fade">Shortening the wait: cutting pediatric outpatient length of stay</h3>
+        <p>Operations research thesis (ITB), presented at the 14th SCBTII Conference.</p>
       </a>
 
-      <a class="card" href="#beyond">
-        <div class="meta fade"><span class="chip">Wellbeing</span><span>Ongoing</span></div>
-        <div class="art">
-          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="400" fill="url(#sky)"/>
-            <circle cx="300" cy="90" r="2" fill="#fff" opacity=".7"/><circle cx="90" cy="60" r="1.5" fill="#fff" opacity=".6"/>
-            <rect width="400" height="400" filter="url(#grain)"/>
-          </svg>
-        </div>
-        <h3 class="fade">Resilience through yoga and running</h3>
-        <p>Wellbeing community building as an RYT 200 teacher and runner.</p>
-      </a>
-
-      <a class="card soon" href="#">
-        <div class="meta fade"><span class="chip">Writing</span><span>Coming soon</span></div>
+      <div class="card" data-cat="marathon">
+        <div class="meta fade"><span class="chip">Marathon</span><span>Singapore</span></div>
         <div class="art">
           <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
             <rect width="400" height="400" fill="#efe6d4"/>
-            <rect x="200" width="200" height="400" fill="#2b1d1b"/>
-            <rect x="200" y="120" width="200" height="140" fill="url(#hatch)"/>
-            <rect x="80" y="110" width="60" height="230" fill="#d9cfbd" stroke="#2a2a28" stroke-width="2"/>
-            <path d="M70 110 L110 70 L150 110Z" fill="#2a2a28"/>
-            <rect x="100" y="160" width="20" height="40" fill="#2a2a28"/>
-            <path d="M0 360 Q 100 320 200 360 T 400 340" fill="none" stroke="#f3efe6" stroke-width="2"/>
+            <path d="M-20 330 C 80 330 120 250 200 250 S 330 160 430 160 V 420 H -20 Z" fill="#c8553d"/>
+            <g fill="none" stroke="#f6efe3" stroke-width="3" stroke-dasharray="14 10">
+              <path d="M-20 362 C 80 362 130 282 210 282 S 340 192 430 192"/>
+              <path d="M-20 396 C 90 396 140 316 220 316 S 350 226 430 226"/>
+            </g>
+            <path d="M318 70 V 168" stroke="#2a2a28" stroke-width="4"/>
+            <path d="M318 70 h46 v28 h-46 Z" fill="#2a2a28"/>
+            <g fill="#efe6d4"><rect x="318" y="70" width="11.5" height="7"/><rect x="341" y="70" width="11.5" height="7"/><rect x="329.5" y="77" width="11.5" height="7"/><rect x="352.5" y="77" width="11.5" height="7"/><rect x="318" y="84" width="11.5" height="7"/><rect x="341" y="84" width="11.5" height="7"/><rect x="329.5" y="91" width="11.5" height="7"/><rect x="352.5" y="91" width="11.5" height="7"/></g>
+            <text x="36" y="118" font-family="Manrope, sans-serif" font-weight="700" font-size="92" letter-spacing="-4" fill="#2a2a28">42.2</text>
+            <text x="40" y="150" font-family="Manrope, sans-serif" font-weight="600" font-size="20" fill="#2a2a28" opacity=".6">KILOMETRES</text>
             <rect width="400" height="400" filter="url(#grain)"/>
           </svg>
         </div>
-        <h3 class="fade">Notes on enforcement quality in APAC</h3>
-        <p>Writing on over/underenforcement, appeals, and AI-mediated decisions.</p>
-      </a>
+        <h3 class="fade">42.2 km later: finishing 4th fastest from Indonesia in Singapore</h3>
+        <p>What a marathon taught me about pacing, pressure, and resilience.</p>
+      </div>
+
+      <div class="card" data-cat="yoga">
+        <div class="meta fade"><span class="chip">Yoga</span><span>RYT 200</span></div>
+        <div class="art">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="400" fill="#b3a6d4"/>
+            <circle cx="200" cy="230" r="110" fill="#f0c08a"/>
+            <rect y="230" width="400" height="170" fill="#7b8f6a"/>
+            <g fill="none" stroke="#efe6d4" stroke-width="3" opacity=".8"><path d="M40 262 H360"/><path d="M80 292 H320"/><path d="M120 322 H280"/></g>
+            <g fill="#2a2a28">
+              <circle cx="200" cy="146" r="16"/>
+              <path d="M200 164 C 176 168 172 200 176 224 L 224 224 C 228 200 224 168 200 164 Z"/>
+              <path d="M150 232 C 170 212 230 212 250 232 C 236 242 164 242 150 232 Z"/>
+              <path d="M180 186 C 160 196 156 214 166 224 L 174 220 C 168 210 176 200 186 196 Z"/>
+              <path d="M220 186 C 240 196 244 214 234 224 L 226 220 C 232 210 224 200 214 196 Z"/>
+            </g>
+            <rect width="400" height="400" filter="url(#grain)"/>
+          </svg>
+        </div>
+        <h3 class="fade">200 hours on the mat: learning to hold space for others</h3>
+        <p>Yoga teacher training (RYT 200) and building wellbeing communities.</p>
+      </div>
 
     </div>
     </div>
     <div class="stage">
-      <div class="title">Protecting<br>Communities</div>
+      <div class="intro">
+        <p class="hi">Hi there, I'm Frisca 👋 I spend my days</p>
+        <h2 class="title">Protecting<br>Communities<br>Online</h2>
+        <p class="sub">I investigate abuse, govern AI enforcement, and push for fair answers when systems fail people, across Indonesia and APAC. <em>Off-screen, I teach yoga and run, building communities around resilience.</em></p>
+      </div>
       <div class="hint">Scroll ↓</div>
     </div>
   </div>
 </section>
 
 <div class="wrap">
-  <!-- ABOUT -->
-  <section id="about" class="block">
-    <div class="two">
-      <div class="side"><h2>About</h2></div>
-      <div class="about">
-        <p>I find patterns in abuse, govern enforcement systems, and brief decision-makers on what the data shows — with a focus on Indonesia and Southeast Asia.</p>
-        <p>Outside work: wellbeing community building for resilience through yoga and running.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- EXPERIENCE -->
   <section id="experience" class="block">
-    <div class="two">
-      <div class="side">
-        <h2>Experience</h2>
-        <p>~3 years across Trust &amp; Safety, logistics operations, and consulting in Singapore and Indonesia.</p>
+    <div class="xp-head">
+      <h2>Experience</h2>
+      <p>From operations research to protecting communities online. Tap a stop to see more.</p>
+    </div>
+    <div class="timeline">
+      <div class="track"><div class="fill"></div></div>
+      <div class="stops">
+        <button type="button" class="stop" data-k="itb" aria-pressed="false" aria-controls="xp-itb" style="--d:0.0s">
+          <span class="node" style="background:#e3b23c"><svg viewBox="0 0 80 80"><path d="M8 32 L40 18 L72 32 L40 46 Z" fill="#2a2a28"/><path d="M22 39 V54 Q40 64 58 54 V39 L40 47 Z" fill="#2a2a28"/><path d="M66 34 V52" stroke="#2a2a28" stroke-width="3"/><circle cx="66" cy="55" r="4" fill="#c8553d"/></svg></span>
+          <span class="yr">2023</span>
+          <span class="org">ITB</span>
+          <span class="rl">Graduated, Operations</span>
+        </button>
+        <button type="button" class="stop" data-k="bcg" aria-pressed="false" aria-controls="xp-bcg" style="--d:0.35s">
+          <span class="node" style="background:#8fae7e"><svg viewBox="0 0 80 80"><rect x="14" y="44" width="10" height="20" rx="2" fill="#2a2a28"/><rect x="30" y="34" width="10" height="30" rx="2" fill="#2a2a28"/><rect x="46" y="26" width="10" height="38" rx="2" fill="#2a2a28"/><path d="M12 36 L30 24 L44 28 L66 12" fill="none" stroke="#efe6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M58 12 H66 V20" fill="none" stroke="#efe6d4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="yr">2023</span>
+          <span class="org">Boston Consulting Group</span>
+          <span class="rl">Project support</span>
+        </button>
+        <button type="button" class="stop" data-k="shopee" aria-pressed="false" aria-controls="xp-shopee" style="--d:0.7s">
+          <span class="node" style="background:#c8553d"><svg viewBox="0 0 80 80"><rect x="8" y="26" width="38" height="28" rx="3" fill="#efe6d4"/><path d="M46 34 H60 L70 44 V54 H46 Z" fill="#efe6d4"/><path d="M52 38 H59 L64 44 H52 Z" fill="#c8553d"/><circle cx="22" cy="57" r="7" fill="#2a2a28"/><circle cx="58" cy="57" r="7" fill="#2a2a28"/><circle cx="22" cy="57" r="2.5" fill="#efe6d4"/><circle cx="58" cy="57" r="2.5" fill="#efe6d4"/><path d="M18 34 H36 M18 42 H30" stroke="#c8553d" stroke-width="3" stroke-linecap="round"/></svg></span>
+          <span class="yr">Jan – Dec 2024</span>
+          <span class="org">Shopee Express</span>
+          <span class="rl">Associate Project Manager</span>
+        </button>
+        <button type="button" class="stop on" data-k="meta" aria-pressed="true" aria-controls="xp-meta" style="--d:1.0499999999999998s">
+          <span class="node" style="background:#5b7db1"><svg viewBox="0 0 80 80"><path d="M40 10 L64 20 V38 C64 54 54 64 40 70 C26 64 16 54 16 38 V20 Z" fill="#efe6d4"/><path d="M29 40 L37 48 L52 31" fill="none" stroke="#2a2a28" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="now">Now</span></span>
+          <span class="yr">2025 – Present</span>
+          <span class="org">Meta, Singapore</span>
+          <span class="rl">Trust &amp; Safety</span>
+        </button>
       </div>
-      <div>
-        <div class="role">
+    </div>
+    <div class="details">
+        <article id="xp-itb" class="detail" hidden>
+          <h3>ITB School of Business and Management</h3>
+          <p class="where">Operations · Graduated 2023 · Bandung, Indonesia</p>
+          <ul>
+            <li>GPA 3.75.</li>
+            <li>Thesis on improving pediatric outpatient length of stay at a hospital; presented at the 14th SCBTII Conference, Telkom University (July 2023).</li>
+            <li>McKinsey Young Leaders Indonesia; XL Future Leaders scholarship recipient.</li>
+            <li>National business case competition winner.</li>
+          </ul>
+        </article>
+        <article id="xp-bcg" class="detail" hidden>
+          <h3>Project Support — Boston Consulting Group</h3>
+          <p class="where">2023 · Indonesia</p>
+          <ul>
+            <li>Project support for consulting engagements in Indonesia.</li>
+          </ul>
+        </article>
+        <article id="xp-shopee" class="detail" hidden>
+          <h3>Associate Project Manager — Shopee Express</h3>
+          <p class="where">Jan 2024 – Dec 2024 · Indonesia</p>
+          <ul>
+            <li>Collaborated with vendor management on vendor decisions; managed 6+ outsourced truck contracts (SLA, pricing).</li>
+          </ul>
+        </article>
+        <article id="xp-meta" class="detail">
           <h3>Trust &amp; Safety Operations / Market Risk Specialist — Meta</h3>
-          <p class="where">APAC · Singapore</p>
+          <p class="where">2025 – Present · APAC · Singapore</p>
           <ul>
             <li>Led detection tooling implementation for child safety: 4k monthly CSAM enforcement, 10% NCMEC escalation.</li>
             <li>Collaborated on AI detection signals for child sexual solicitation in Instagram messaging; true positive rate 60% → 75%.</li>
@@ -303,75 +448,88 @@
             <li>Drove 15% vendor quality improvement through training and AI-assisted curriculum.</li>
             <li>Updated 3+ law enforcement response guidelines for regulatory alignment; top P0/P1 closer on business continuity plan.</li>
           </ul>
-        </div>
-        <div class="role">
-          <h3>Associate Project Manager — Shopee Express</h3>
-          <p class="where">Indonesia</p>
-          <ul><li>Collaborated with vendor management on vendor decisions; managed 6+ outsourced truck contracts (SLA, pricing).</li></ul>
-        </div>
-        <div class="role">
-          <h3>Project Support — Boston Consulting Group</h3>
-          <p class="where">Indonesia</p>
-        </div>
-      </div>
+        </article>
     </div>
   </section>
 
-  <!-- BEYOND / EDUCATION -->
-  <section id="beyond" class="block">
-    <h2>Beyond work &amp; recognition</h2>
-    <ul class="list">
-      <li>Certified yoga teacher (RYT 200)</li>
-      <li>Content creator (20K+) — fitness, wellness, travel running, yoga</li>
-      <li>ITB School of Business and Management — Operations (GPA 3.75)</li>
-      <li>McKinsey Young Leaders Indonesia</li>
-      <li>XL Future Leaders scholarship recipient</li>
-      <li>National business case competition winner</li>
-    </ul>
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="avatars" aria-hidden="true"><span class="av" style="--i:0"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice"><rect width="200" height="200" fill="#e3b23c"/><path d="M100 34 C150 34 164 82 162 120 C160 158 178 174 186 200 L14 200 C22 174 40 158 38 120 C36 82 50 34 100 34 Z" fill="#3f7f7a"/><ellipse cx="100" cy="102" rx="39" ry="45" fill="#d9a37d"/><path d="M58 84 Q100 50 142 84" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="3"/><path d="M76 84 Q84 79 92 84 M108 84 Q116 79 124 84" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><path d="M78 102 Q84 95 90 102 M110 102 Q116 95 122 102" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><circle cx="72" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><circle cx="128" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><path d="M99 106 Q96 113 101 114" fill="none" stroke="#2a211c" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M89 126 Q100 135 111 126" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><path d="M62 140 Q100 168 138 140" fill="none" stroke="#000" stroke-opacity=".1" stroke-width="3"/><rect width="200" height="200" filter="url(#grain)"/></svg></span><span class="av" style="--i:1"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice"><rect width="200" height="200" fill="#e7a4ae"/><circle cx="56" cy="70" r="26" fill="#1f1a17"/><circle cx="78" cy="46" r="28" fill="#1f1a17"/><circle cx="108" cy="40" r="30" fill="#1f1a17"/><circle cx="138" cy="54" r="28" fill="#1f1a17"/><circle cx="150" cy="84" r="24" fill="#1f1a17"/><circle cx="50" cy="100" r="22" fill="#1f1a17"/><circle cx="152" cy="112" r="20" fill="#1f1a17"/><circle cx="48" cy="126" r="18" fill="#1f1a17"/><circle cx="154" cy="136" r="16" fill="#1f1a17"/><path d="M26 200 Q28 158 100 152 Q172 158 174 200 Z" fill="#f3d34a"/><rect x="87" y="126" width="26" height="32" rx="8" fill="#8d5a3b"/><ellipse cx="55" cy="102" rx="8" ry="10" fill="#8d5a3b"/><ellipse cx="145" cy="102" rx="8" ry="10" fill="#8d5a3b"/><ellipse cx="100" cy="98" rx="45" ry="49" fill="#8d5a3b"/><path d="M56 92 Q60 56 100 54 Q140 56 144 92 Q128 72 100 72 Q72 72 56 92 Z" fill="#1f1a17"/><path d="M76 84 Q84 79 92 84 M108 84 Q116 79 124 84" fill="none" stroke="#1f1a17" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="84" cy="100" rx="4.2" ry="5.2" fill="#2a211c"/><ellipse cx="116" cy="100" rx="4.2" ry="5.2" fill="#2a211c"/><circle cx="85.5" cy="98" r="1.4" fill="#fff"/><circle cx="117.5" cy="98" r="1.4" fill="#fff"/><circle cx="72" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><circle cx="128" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><path d="M99 106 Q96 113 101 114" fill="none" stroke="#2a211c" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M90 124 Q100 140 110 124 Z" fill="#b8473f" stroke="#2a211c" stroke-width="2.5" stroke-linejoin="round"/><rect width="200" height="200" filter="url(#grain)"/></svg></span><span class="av" style="--i:2"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice"><rect width="200" height="200" fill="#c8553d"/><path d="M26 200 Q28 158 100 152 Q172 158 174 200 Z" fill="#f1e6d2"/><rect x="87" y="126" width="26" height="32" rx="8" fill="#b97d57"/><ellipse cx="55" cy="102" rx="8" ry="10" fill="#b97d57"/><ellipse cx="145" cy="102" rx="8" ry="10" fill="#b97d57"/><ellipse cx="100" cy="98" rx="45" ry="49" fill="#b97d57"/><path d="M58 70 L60 46 Q100 38 140 46 L142 70 Q100 62 58 70 Z" fill="#1f1a17"/><path d="M58 70 Q100 62 142 70" fill="none" stroke="#3a3a3a" stroke-width="2"/><path d="M56 96 Q56 76 60 70 Q62 86 62 100 Z M144 96 Q144 76 140 70 Q138 86 138 100 Z" fill="#c8c3bb"/><path d="M76 84 Q84 79 92 84 M108 84 Q116 79 124 84" fill="none" stroke="#c8c3bb" stroke-width="3.5" stroke-linecap="round"/><path d="M78 102 Q84 95 90 102 M110 102 Q116 95 122 102" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><path d="M70 98 l-5 -3 M70 104 l-5 2 M130 98 l5 -3 M130 104 l5 2" stroke="#2a211c" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/><circle cx="72" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><circle cx="128" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><path d="M99 106 Q96 113 101 114" fill="none" stroke="#2a211c" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M86 122 Q100 114 114 122 Q100 120 86 122 Z" fill="#c8c3bb" stroke="#c8c3bb" stroke-width="4" stroke-linejoin="round"/><path d="M89 126 Q100 135 111 126" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><rect width="200" height="200" filter="url(#grain)"/></svg></span><span class="av" style="--i:3"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice"><rect width="200" height="200" fill="#c8553d"/><path d="M48 92 Q44 38 100 36 Q156 38 152 92 L158 176 Q100 188 42 176 Z" fill="#6b4329"/><path d="M26 200 Q28 158 100 152 Q172 158 174 200 Z" fill="#f1e6d2"/><rect x="87" y="126" width="26" height="32" rx="8" fill="#eec3a2"/><ellipse cx="55" cy="102" rx="8" ry="10" fill="#eec3a2"/><ellipse cx="145" cy="102" rx="8" ry="10" fill="#eec3a2"/><ellipse cx="100" cy="98" rx="45" ry="49" fill="#eec3a2"/><path d="M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z" fill="#6b4329"/><path d="M76 84 Q84 79 92 84 M108 84 Q116 79 124 84" fill="none" stroke="#6b4329" stroke-width="3.5" stroke-linecap="round"/><path d="M78 102 Q84 95 90 102 M110 102 Q116 95 122 102" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><circle cx="72" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><circle cx="128" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><path d="M99 106 Q96 113 101 114" fill="none" stroke="#2a211c" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M90 124 Q100 140 110 124 Z" fill="#b8473f" stroke="#2a211c" stroke-width="2.5" stroke-linejoin="round"/><rect width="200" height="200" filter="url(#grain)"/></svg></span><span class="av" style="--i:4"><svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice"><rect width="200" height="200" fill="#3f7f7a"/><path d="M26 200 Q28 158 100 152 Q172 158 174 200 Z" fill="#e3b23c"/><rect x="87" y="126" width="26" height="32" rx="8" fill="#5e3b28"/><ellipse cx="55" cy="102" rx="8" ry="10" fill="#5e3b28"/><ellipse cx="145" cy="102" rx="8" ry="10" fill="#5e3b28"/><ellipse cx="100" cy="98" rx="45" ry="49" fill="#5e3b28"/><path d="M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z" fill="#1f1a17"/><path d="M76 84 Q84 79 92 84 M108 84 Q116 79 124 84" fill="none" stroke="#1f1a17" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="84" cy="100" rx="4.2" ry="5.2" fill="#2a211c"/><ellipse cx="116" cy="100" rx="4.2" ry="5.2" fill="#2a211c"/><circle cx="85.5" cy="98" r="1.4" fill="#fff"/><circle cx="117.5" cy="98" r="1.4" fill="#fff"/><g fill="none" stroke="#2a211c" stroke-width="3"><circle cx="84" cy="100" r="13"/><circle cx="116" cy="100" r="13"/><path d="M97 100 h6 M71 98 l-14 -4 M129 98 l14 -4"/></g><circle cx="72" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><circle cx="128" cy="117" r="8" fill="#ef7f7f" opacity=".38"/><path d="M99 106 Q96 113 101 114" fill="none" stroke="#2a211c" stroke-opacity=".35" stroke-width="2.5" stroke-linecap="round"/><path d="M89 126 Q100 135 111 126" fill="none" stroke="#2a211c" stroke-width="3.5" stroke-linecap="round"/><rect width="200" height="200" filter="url(#grain)"/></svg></span></div>
+    <h2>Let's protect communities together.</h2>
+    <p>Feel free to reach out, whether it's about Trust &amp; Safety, AI governance, a role, or just a run or yoga session. I'd love to hear from you.</p>
+    <div class="reach">
+      <a class="btn primary" href="mailto:friscanadyafebrianty@gmail.com">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h18v11H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3.5 7l8.5 6.5L20.5 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        Email me
+      </a>
+      <a class="btn" href="https://www.linkedin.com/in/friscanadya" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V16M8 7.8v.1M11.5 16v-5.5M11.5 13c0-1.7 1-2.6 2.3-2.6s2.2.8 2.2 2.6V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Connect on LinkedIn
+      </a>
+    </div>
+    <p class="addr">friscanadyafebrianty@gmail.com · linkedin.com/in/friscanadya</p>
   </section>
 
-  <footer id="contact">
+  <footer>
     <span>© 2026 Frisca · Singapore / Jakarta / Bali</span>
-    <div class="links">
-      <a href="mailto:YOUR_EMAIL">Email</a>
-      <a href="https://www.linkedin.com/in/YOUR_LINKEDIN">LinkedIn</a>
-      <a href="https://github.com/bylifey">GitHub</a>
-    </div>
+    <div class="links"><a href="https://github.com/bylifey">GitHub</a></div>
   </footer>
 </div>
 
 <script>
 (function () {
-  var section = document.getElementById('work');
+  var section = document.getElementById('about');
   var sticky = section.querySelector('.sticky');
   var stage = section.querySelector('.stage');
-  var title = stage.querySelector('.title'), hint = stage.querySelector('.hint');
-  var arts = Array.prototype.slice.call(section.querySelectorAll('.card .art'));
+  var intro = stage.querySelector('.intro'), outro = stage.querySelector('.outro'), hint = stage.querySelector('.hint');
+  var title = stage.querySelector('.title');
+  var cards = Array.prototype.slice.call(section.querySelectorAll('.card'));
+  var buttons = Array.prototype.slice.call(section.querySelectorAll('.filters button'));
+  var empty = section.querySelector('.empty');
   var fades = Array.prototype.slice.call(section.querySelectorAll('.fade'));
-  var svgs = arts.map(function (a) { return a.innerHTML; });
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var arts = [], svgs = [], tiles = [];
+
+  // Click-to-filter. Trust & Safety is the default.
+  function applyFilter(f) {
+    buttons.forEach(function (b) { var on = b.dataset.f === f; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    cards.forEach(function (c) { c.hidden = !(f === 'all' || c.dataset.cat === f); });
+    var shown = cards.filter(function (c) { return !c.hidden; });
+    empty.hidden = shown.length > 0;
+    arts = shown.map(function (c) { return c.querySelector('.art'); });
+    svgs = arts.map(function (a) { return a.innerHTML; });
+    tiles.forEach(function (t, i) { t.lastChild.innerHTML = svgs.length ? svgs[i % svgs.length] : ''; });
+    if (W) measure();
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { applyFilter(b.dataset.f); }); });
+  applyFilter('tns');
 
   if (reduce) { section.style.height = 'auto'; sticky.classList.add('done'); return; }
 
-  // Ring of square tiles: the six projects, twice around.
-  var N = arts.length * 2;
-  var tiles = [];
+  // Ring of illustrated faces; as you scroll, they turn into the six project tiles.
+  var FACES = ["<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#e3b23c\"/><path d=\"M100 34 C150 34 164 82 162 120 C160 158 178 174 186 200 L14 200 C22 174 40 158 38 120 C36 82 50 34 100 34 Z\" fill=\"#3f7f7a\"/><ellipse cx=\"100\" cy=\"102\" rx=\"39\" ry=\"45\" fill=\"#d9a37d\"/><path d=\"M58 84 Q100 50 142 84\" fill=\"none\" stroke=\"#000\" stroke-opacity=\".12\" stroke-width=\"3\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M78 102 Q84 95 90 102 M110 102 Q116 95 122 102\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M62 140 Q100 168 138 140\" fill=\"none\" stroke=\"#000\" stroke-opacity=\".1\" stroke-width=\"3\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#8fae7e\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#5b7db1\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#f6d9c6\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#f6d9c6\"/><path d=\"M56 106 Q54 84 62 74 Q60 92 64 108 Z\" fill=\"#c8c3bb\"/><path d=\"M144 106 Q146 84 138 74 Q140 92 136 108 Z\" fill=\"#c8c3bb\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#c8c3bb\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><path d=\"M70 98 l-5 -3 M70 104 l-5 2 M130 98 l5 -3 M130 104 l5 2\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2\" stroke-linecap=\"round\"/><g fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3\"><circle cx=\"84\" cy=\"100\" r=\"13\"/><circle cx=\"116\" cy=\"100\" r=\"13\"/><path d=\"M97 100 h6 M71 98 l-14 -4 M129 98 l14 -4\"/></g><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#e7a4ae\"/><circle cx=\"56\" cy=\"70\" r=\"26\" fill=\"#1f1a17\"/><circle cx=\"78\" cy=\"46\" r=\"28\" fill=\"#1f1a17\"/><circle cx=\"108\" cy=\"40\" r=\"30\" fill=\"#1f1a17\"/><circle cx=\"138\" cy=\"54\" r=\"28\" fill=\"#1f1a17\"/><circle cx=\"150\" cy=\"84\" r=\"24\" fill=\"#1f1a17\"/><circle cx=\"50\" cy=\"100\" r=\"22\" fill=\"#1f1a17\"/><circle cx=\"152\" cy=\"112\" r=\"20\" fill=\"#1f1a17\"/><circle cx=\"48\" cy=\"126\" r=\"18\" fill=\"#1f1a17\"/><circle cx=\"154\" cy=\"136\" r=\"16\" fill=\"#1f1a17\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#f3d34a\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#8d5a3b\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#8d5a3b\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#8d5a3b\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#8d5a3b\"/><path d=\"M56 92 Q60 56 100 54 Q140 56 144 92 Q128 72 100 72 Q72 72 56 92 Z\" fill=\"#1f1a17\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#1f1a17\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M90 124 Q100 140 110 124 Z\" fill=\"#b8473f\" stroke=\"#2a211c\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#5b7db1\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#e7e1d6\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#b97d57\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#b97d57\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#b97d57\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#b97d57\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#1f1a17\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#1f1a17\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M58 104 Q60 152 100 154 Q140 152 142 104 Q136 132 100 134 Q64 132 58 104 Z\" fill=\"#1f1a17\"/><path d=\"M86 122 Q100 114 114 122 Q100 120 86 122 Z\" fill=\"#1f1a17\" stroke=\"#1f1a17\" stroke-width=\"4\" stroke-linejoin=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#c8553d\"/><path d=\"M48 92 Q44 38 100 36 Q156 38 152 92 L158 176 Q100 188 42 176 Z\" fill=\"#6b4329\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#f1e6d2\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#eec3a2\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#eec3a2\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#eec3a2\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#eec3a2\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#6b4329\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#6b4329\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M78 102 Q84 95 90 102 M110 102 Q116 95 122 102\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M90 124 Q100 140 110 124 Z\" fill=\"#b8473f\" stroke=\"#2a211c\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#b3a6d4\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#d98c9a\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#d9a37d\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#d9a37d\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#d9a37d\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#d9a37d\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#e9e5de\"/><circle cx=\"100\" cy=\"36\" r=\"18\" fill=\"#e9e5de\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#c8c3bb\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><path d=\"M70 98 l-5 -3 M70 104 l-5 2 M130 98 l5 -3 M130 104 l5 2\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2\" stroke-linecap=\"round\"/><g fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3\"><circle cx=\"84\" cy=\"100\" r=\"13\"/><circle cx=\"116\" cy=\"100\" r=\"13\"/><path d=\"M97 100 h6 M71 98 l-14 -4 M129 98 l14 -4\"/></g><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#e8d5b5\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#c8553d\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#eec3a2\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#eec3a2\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#eec3a2\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#eec3a2\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#3a2a20\"/><path d=\"M54 84 Q56 40 100 38 Q144 40 146 84 Z\" fill=\"#3f7f7a\"/><path d=\"M52 84 Q100 74 160 84 Q164 92 150 92 Q100 86 54 92 Z\" fill=\"#3f7f7a\" opacity=\".85\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><path d=\"M110 102 Q116 95 122 102\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M90 124 Q100 140 110 124 Z\" fill=\"#b8473f\" stroke=\"#2a211c\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#3f7f7a\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#e3b23c\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#5e3b28\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#5e3b28\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#5e3b28\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#5e3b28\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#1f1a17\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#1f1a17\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><g fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3\"><circle cx=\"84\" cy=\"100\" r=\"13\"/><circle cx=\"116\" cy=\"100\" r=\"13\"/><path d=\"M97 100 h6 M71 98 l-14 -4 M129 98 l14 -4\"/></g><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#f0c08a\"/><path d=\"M50 92 Q46 40 100 38 Q154 40 150 92 L154 142 Q100 150 46 142 Z\" fill=\"#a5482e\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#5b7db1\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#f6d9c6\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#f6d9c6\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#a5482e\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#a5482e\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M94 127 Q100 131 106 127\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#8fae7e\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#e7a4ae\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#8d5a3b\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#8d5a3b\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#8d5a3b\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#8d5a3b\"/><circle cx=\"60\" cy=\"78\" r=\"14\" fill=\"#3a2a20\"/><circle cx=\"70\" cy=\"58\" r=\"16\" fill=\"#3a2a20\"/><circle cx=\"90\" cy=\"46\" r=\"17\" fill=\"#3a2a20\"/><circle cx=\"112\" cy=\"46\" r=\"17\" fill=\"#3a2a20\"/><circle cx=\"132\" cy=\"58\" r=\"16\" fill=\"#3a2a20\"/><circle cx=\"142\" cy=\"78\" r=\"14\" fill=\"#3a2a20\"/><circle cx=\"100\" cy=\"60\" r=\"14\" fill=\"#3a2a20\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#3a2a20\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M78 102 Q84 95 90 102 M110 102 Q116 95 122 102\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#d98c9a\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#3f7f7a\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#f6d9c6\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#f6d9c6\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#f6d9c6\"/><path d=\"M54 98 Q50 42 100 40 Q150 42 146 98 Q136 66 100 64 Q66 66 54 98 Z\" fill=\"#d9a84e\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#d9a84e\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><ellipse cx=\"84\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><ellipse cx=\"116\" cy=\"100\" rx=\"4.2\" ry=\"5.2\" fill=\"#2a211c\"/><circle cx=\"85.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"117.5\" cy=\"98\" r=\"1.4\" fill=\"#fff\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M58 104 Q60 152 100 154 Q140 152 142 104 Q136 132 100 134 Q64 132 58 104 Z\" fill=\"#d9a84e\"/><path d=\"M86 122 Q100 114 114 122 Q100 120 86 122 Z\" fill=\"#d9a84e\" stroke=\"#d9a84e\" stroke-width=\"4\" stroke-linejoin=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>", "<svg viewBox=\"0 0 200 200\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"200\" height=\"200\" fill=\"#c8553d\"/><path d=\"M26 200 Q28 158 100 152 Q172 158 174 200 Z\" fill=\"#f1e6d2\"/><rect x=\"87\" y=\"126\" width=\"26\" height=\"32\" rx=\"8\" fill=\"#b97d57\"/><ellipse cx=\"55\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#b97d57\"/><ellipse cx=\"145\" cy=\"102\" rx=\"8\" ry=\"10\" fill=\"#b97d57\"/><ellipse cx=\"100\" cy=\"98\" rx=\"45\" ry=\"49\" fill=\"#b97d57\"/><path d=\"M58 70 L60 46 Q100 38 140 46 L142 70 Q100 62 58 70 Z\" fill=\"#1f1a17\"/><path d=\"M58 70 Q100 62 142 70\" fill=\"none\" stroke=\"#3a3a3a\" stroke-width=\"2\"/><path d=\"M56 96 Q56 76 60 70 Q62 86 62 100 Z M144 96 Q144 76 140 70 Q138 86 138 100 Z\" fill=\"#c8c3bb\"/><path d=\"M76 84 Q84 79 92 84 M108 84 Q116 79 124 84\" fill=\"none\" stroke=\"#c8c3bb\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M78 102 Q84 95 90 102 M110 102 Q116 95 122 102\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><path d=\"M70 98 l-5 -3 M70 104 l-5 2 M130 98 l5 -3 M130 104 l5 2\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle cx=\"72\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><circle cx=\"128\" cy=\"117\" r=\"8\" fill=\"#ef7f7f\" opacity=\".38\"/><path d=\"M99 106 Q96 113 101 114\" fill=\"none\" stroke=\"#2a211c\" stroke-opacity=\".35\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M86 122 Q100 114 114 122 Q100 120 86 122 Z\" fill=\"#c8c3bb\" stroke=\"#c8c3bb\" stroke-width=\"4\" stroke-linejoin=\"round\"/><path d=\"M89 126 Q100 135 111 126\" fill=\"none\" stroke=\"#2a211c\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><rect width=\"200\" height=\"200\" filter=\"url(#grain)\"/></svg>"];
+  var N = FACES.length;
   for (var i = 0; i < N; i++) {
     var t = document.createElement('div');
-    t.className = 'tile'; t.innerHTML = svgs[i % arts.length];
+    t.className = 'tile'; t.innerHTML = '<div class="f">' + FACES[i] + '</div><div class="a">' + (svgs.length ? svgs[i % svgs.length] : '') + '</div>';
     stage.appendChild(t); tiles.push(t);
   }
 
-  var W, H, S, R, CX, CY, P = 1600, TILT = 22 * Math.PI / 180, targets = [];
+  var ST = 0, W, H, S, R, CX, CY, P = 1600, TILT = 22 * Math.PI / 180, targets = [];
   function measure() {
+    ST = parseFloat(getComputedStyle(sticky).top) || 0;
     W = sticky.clientWidth; H = sticky.clientHeight;
     var mobile = W < 720;
-    R = Math.min(mobile ? W * 0.46 : W * 0.34, 500, H * 0.5);
-    S = Math.round(R * (mobile ? 0.46 : 0.4));
-    CX = W / 2; CY = H * (mobile ? 0.58 : 0.56);
+    if (mobile) {
+      var bandTop = intro.offsetTop + intro.offsetHeight + 8, bandBottom = H - 54, band = Math.max(120, bandBottom - bandTop);
+      R = Math.min(W * 0.4, band / 1.25); S = Math.round(R * 0.44); CX = W / 2; CY = (bandTop + bandBottom) / 2;
+    } else {
+      R = Math.min(W * 0.19, H * 0.34, 360); S = Math.round(R * 0.42); CX = W * 0.73; CY = H * 0.5;
+    }
     tiles.forEach(function (t) { t.style.width = t.style.height = S + 'px'; });
     var base = sticky.getBoundingClientRect();
     targets = arts.map(function (a) { var r = a.getBoundingClientRect(); return { x: r.left - base.left + r.width / 2, y: r.top - base.top + r.height / 2, w: r.width }; });
+    if (!targets.length) { var e = empty.getBoundingClientRect(); targets = [{ x: e.left - base.left + e.width / 2, y: e.top - base.top + e.height / 2, w: S }]; }
   }
 
   function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
@@ -386,15 +544,16 @@
     var rect = section.getBoundingClientRect();
     if (rect.bottom < 0 || rect.top > H) return;   // off screen: skip work
 
-    var p = clamp(-rect.top / (section.offsetHeight - H));
+    var p = clamp((ST - rect.top) / (section.offsetHeight - H));   // ST = height of the sticky header
     // ring keeps turning (slows down as tiles leave it)
     var flow = clamp((p - 0.12) / 0.7);
     spin += dt * 0.012 * (1 - flow);
 
     // title fades and lifts away as tiles start flowing
     var to = 1 - clamp((p - 0.1) / 0.25);
-    title.style.opacity = to;
-    title.style.transform = 'translateY(' + ((1 - to) * -40) + 'px)';
+    intro.style.opacity = to;
+    intro.style.transform = 'translateY(' + ((1 - to) * -40) + 'px)';
+    if (outro) outro.style.opacity = to;
     hint.style.opacity = 1 - clamp(p / 0.05);
 
     for (var i = 0; i < N; i++) {
@@ -408,15 +567,17 @@
       var rx = CX + X * k, ry = CY + y3 * k, rs = k;
 
       // flow into the grid: tile i and its twin (i + 6) both head to card i % 6
-      var g = targets[i % arts.length];
-      var q = ease(clamp((flow - (i % arts.length) * 0.05) / 0.7));
-      var twin = i >= arts.length;
+      var n = targets.length;
+      var g = targets[i % n];
+      var q = ease(clamp((flow - (i % n) * 0.05) / 0.7));
+      var twin = i >= arts.length;   // extra faces fade out as they land (all of them when a filter is empty)
       var x = lerp(rx, g.x, q), y = lerp(ry, g.y, q);
       var sc = lerp(rs, g.w / S, q);
       var rotY = lerp(-thDeg, 0, q);
       var rotX = lerp(-TILT * 57.3 * 0.6, 0, q);
 
       t.style.opacity = twin ? 1 - clamp((q - 0.55) / 0.35) : 1;
+      t.lastChild.style.opacity = clamp((q - 0.3) / 0.45);   // face turns into the project art as it lands
       t.style.zIndex = q > 0.4 ? 40 : (Z > 0 ? 30 : 10);  // front half passes in front of the title, back half behind
       t.style.transform = 'translate3d(' + (x - S / 2) + 'px,' + (y - S / 2) + 'px,0) scale(' + sc + ') perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg)';
       t.style.borderRadius = lerp(10, 4, q) / sc + 'px';
@@ -432,6 +593,24 @@
   window.addEventListener('load', measure);
   measure();
   requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(function () {
+  var tl = document.querySelector('.timeline');
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var details = Array.prototype.slice.call(document.querySelectorAll('.detail'));
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es, o) {
+      es.forEach(function (e) { if (e.isIntersecting) { tl.classList.add('in'); o.disconnect(); } });
+    }, { threshold: 0.35 }).observe(tl);
+  } else { tl.classList.add('in'); }
+  stops.forEach(function (b) {
+    b.addEventListener('click', function () {
+      stops.forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); });
+      details.forEach(function (d) { d.hidden = d.id !== 'xp-' + b.dataset.k; });
+    });
+  });
 })();
 </script>
 </body>
